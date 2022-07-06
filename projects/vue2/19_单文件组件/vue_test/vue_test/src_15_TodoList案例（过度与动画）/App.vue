@@ -1,0 +1,146 @@
+<template>
+    <div id="root">
+        <div class="todo-container">
+            <div class="todo-wrap">
+                <MyHeader @addTodo="addTodo"></MyHeader>
+                <TodoList :todos="todos"></TodoList>
+                <MyFooter :todos="todos" ref="myFooter"></MyFooter>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import pubsub from 'pubsub-js'
+    import MyHeader from "./components/MyHeader";
+    import MyFooter from "./components/MyFooter";
+    import TodoList from "./components/TodoList";
+
+    export default {
+        name: "App",
+        data() {
+            return {
+                todos: JSON.parse(localStorage.getItem('todos')) || []
+            }
+        },
+        mounted() {
+            //自定义事件
+            this.$refs.myFooter.$on('checkAllTodo', this.checkAllTodo)
+            this.$refs.myFooter.$on('clearAllTodo', this.clearAllTodo)
+
+            //全局事件总线
+            this.$bus.$on('checkTodo', this.checkTodo)
+            // this.$bus.$on('deleteTodo', this.deleteTodo)
+            this.$bus.$on('updateTodo', this.updateTodo) //新增编辑功能
+
+            //消息订阅
+            this.pubId = pubsub.subscribe('deleteTodo', this.deleteTodo)
+        },
+        beforeDestroy() {
+            //从事件总线上解绑自定义事件
+            this.$bus.$off('checkTodo')
+            // this.$bus.$off('deleteTodo')
+            this.$bus.$off('updateTodo')
+
+            //取消订阅
+            pubsub.unsubscribe(this.pubId)
+        },
+        methods: {
+            //添加一个todo
+            addTodo(todoObj) {
+                this.todos.unshift(todoObj)
+            },
+            //勾选or取消勾选一个todo
+            checkTodo(id) {
+                this.todos.forEach(todo => {
+                    if (todo.id === id) todo.done = !todo.done
+                })
+            },
+            //更新一个todo
+            updateTodo(id, title) {
+                this.todos.forEach(todo => {
+                    if (todo.id === id) todo.title = title
+                })
+            },
+            //删除一个todo
+            deleteTodo(_, id) {
+                this.todos = this.todos.filter(todo => todo.id !== id)
+            },
+            //全选or取消全选
+            checkAllTodo(done) {
+                this.todos.forEach(todo => todo.done = done)
+            },
+            //清除所有已经完成的todo
+            clearAllTodo() {
+                this.todos = this.todos.filter(todo => !todo.done)
+            }
+        },
+        components: {
+            MyHeader,
+            MyFooter,
+            TodoList
+        },
+        //应用本地存储，存储数据
+        watch: {
+            todos: {
+                deep: true,
+                handler(value) {
+                    localStorage.setItem('todos', JSON.stringify(value))
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    /*base*/
+    body {
+        background-color: #fff;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 4px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #da4f49;
+        border: 1px solid #bd362f;
+    }
+
+    .btn-danger:hover {
+        color: #fff;
+        background-color: #bd362f;
+    }
+
+    .btn-edit {
+        color: #fff;
+        background-color: skyblue;
+        border: 1px solid rgb(103, 159, 180);
+        margin-right: 5px;
+    }
+
+    .btn:focus {
+        outline: none;
+    }
+
+    .todo-container {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    .todo-container .todo-wrap {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+</style>

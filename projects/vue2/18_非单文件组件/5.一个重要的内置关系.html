@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一个重要的内置关系</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<!--
+    1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+    2.为什么要有这层关系：让vc可以访问到 Vue原型上的属性、方法
+-->
+<div id="root">
+    <school></school>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    Vue.prototype.x = 99;
+
+    //创建school组件
+    const school = Vue.extend({
+        template: `
+            <div>
+                <h2>学校名称：{{name}}</h2>
+                <h2>学校地址：{{address}}</h2>
+                <button @click="showX">输出x</button>
+            </div>`,
+        data() {
+            return {
+                name: "Spring",
+                address: "China"
+            }
+        },
+        methods: {
+            showX() {
+                alert(this.x)
+            }
+        }
+    })
+
+    //创建一个vm
+    new Vue({
+        el: '#root',
+        data: {
+            msg: "你好！",
+        },
+        components: {
+            school
+        }
+    })
+
+    console.log(school.prototype.__proto__ === Vue.prototype)
+</script>
+
+<!--<script>
+    //定义一个构造函数
+    function Demo() {
+        this.a = 1
+        this.b = 2
+    }
+
+    //创建一个Demo的实例对象
+    const d = new Demo()
+
+    console.log(Demo.prototype) //显式原型属性
+    console.log(d.__proto__) //隐式原型属性
+    console.log(Demo.prototype === d.__proto__)
+
+    //程序员通过显式原型属性操作对象，追加一个x属性。值为99
+    Demo.prototype.x = 99
+
+    console.log("@", d)
+</script>-->
+</body>
+</html>

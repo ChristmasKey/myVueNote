@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>el与data的两种写法</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h1>你好，{{name}}</h1>
+</div>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+
+    //el的两种写法
+    /*const v = new Vue({
+        // el: '#root', //第一种写法
+        data: {
+            name: 'SpringStone',
+        }
+    });
+
+    setTimeout(() => {
+        v.$mount('#root') // 第二种写法
+    }, 1000)*/
+
+    //data的两种写法
+    new Vue({
+        el: '#root',
+        //data的第一种写法：对象式
+        /*data: {
+            name: 'SpringStone'
+        }*/
+
+        // data的第二种写法：函数式
+        data() {
+            console.log('@@@', this) //此处的this是Vue实例对象
+            return {
+                name: 'SpringStone'
+            }
+        }
+    })
+</script>
+</body>
+</html>

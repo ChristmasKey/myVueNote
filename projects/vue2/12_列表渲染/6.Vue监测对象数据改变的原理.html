@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue监测对象数据改变的原理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h2>学校名称：{{name}}</h2>
+    <h2>学校地址：{{address}}</h2>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: "SpringStone",
+            address: "江苏",
+            student: {
+                name: "",
+                age: {
+                    realAge: 40,
+                    fakeAge: 20,
+                },
+                friends: [
+                    {name: "Jerry", age: 35},
+                    {name: "Tony", age: 36},
+                ]
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理解MVVM</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h1>学校名称：{{name}}</h1>
+    <h1>学校地址：{{address}}</h1>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        data: {
+            name: 'SpringStone',
+            address: '江苏'
+        }
+    })
+
+    vm.$mount('#root')
+</script>
+</body>
+</html>

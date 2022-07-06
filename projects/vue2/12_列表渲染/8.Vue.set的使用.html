@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.set的使用</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h1>学校信息</h1>
+    <button @click="addLeader">添加校长</button>
+    <h2>学校名称：{{name}}</h2>
+    <h2>学校地址：{{address}}</h2>
+    <h2>校长是：{{leader}}</h2>
+    <hr>
+    <h1>学生信息</h1>
+    <button @click="addSex">添加性别属性，默认值为男</button>
+    <h2>姓名：{{student.name}}</h2>
+    <h2 v-if="student.sex">性别：{{student.sex}}</h2>
+    <h2>年龄：{{student.age.fakeAge}}，实际年龄：{{student.age.realAge}}</h2>
+    <h2>朋友们</h2>
+    <ul>
+        <li v-for="(friend,index) in student.friends" :key="index">
+            {{friend.name}}--{{friend.age}}
+        </li>
+    </ul>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            name: "SpringStone",
+            address: "China",
+            student: {
+                name: "Tom",
+                age: {
+                    realAge: 40,
+                    fakeAge: 20
+                },
+                friends: [
+                    {name: 'Jerry', age: 35},
+                    {name: 'Tony', age: 36},
+                ]
+            }
+        },
+        methods: {
+            addSex() {
+                // Vue.set(vm._data.student, "sex", "男")
+                // Vue.set(vm.student, "sex", "男")
+                // Vue.set(this.student, "sex", "男")
+                this.$set(this.student, "sex", "男")
+            },
+            addLeader() {
+                //以下方法会报错：Vue.set的对象不能是Vue实例，或者Vue实例的根数据对象
+                this.$set(this._data, "leader", "一个帅气的男子")
+            }
+        }
+    })
+</script>
+</body>
+</html>

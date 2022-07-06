@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收集表单数据</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<!--
+    收集表单数据：
+        若：<input type="text"/>，则v-model收集的是value值，用户输入的就是value值；
+        若：<input type="radio"/>，则v-model收集的是value值，且要给标签配置value值；
+        若：<input type="checkbox"/>
+            1.没有配置input的value属性，那么收集的就是checked（勾选 or 未勾选，是布尔值）
+            2.配置input的value属性：
+                （1）v-model的初始值是非数组，那么收集的就是checked（勾选 or 未勾选，是布尔值）
+                （2）v-model的初始值是数组，那么收集的就是value组成的数组
+        备注：v-model的三个修饰符
+            lazy：失去焦点再收集数据
+            number：输入字符串转为有效数字，一般结合<input type="number"/>一起使用
+            trim：输入首尾空格过滤
+-->
+<div id="root">
+    <form @submit.prevent="demo">
+        <label for="account">账号：<input type="text" id="account" v-model.trim="userInfo.account"></label><br>
+        <label for="password">密码：<input type="password" id="password" v-model="userInfo.password"></label><br>
+        <label for="age">年龄：<input type="number" id="age" v-model.number="userInfo.age"></label><br>
+        性别：
+        <label for="male"><input type="radio" id="male" name="sex" value="male" v-model="userInfo.sex">男</label>
+        <label for="female"><input type="radio" id="female" name="sex" value="female" v-model="userInfo.sex">女</label>
+        <br>
+        爱好：
+        <label for="study"><input type="checkbox" id="study" v-model="userInfo.hobby" value="study">学习</label>
+        <label for="game"><input type="checkbox" id="game" v-model="userInfo.hobby" value="game">游戏</label>
+        <label for="food"><input type="checkbox" id="food" v-model="userInfo.hobby" value="food">美食</label>
+        <br>
+        <label for="schoolZone">所属校区：
+            <select name="school" id="schoolZone" v-model="userInfo.schoolZone">
+                <option value="">请选择校区</option>
+                <option value="BJ">北京</option>
+                <option value="SH">上海</option>
+                <option value="SZ">深圳</option>
+                <option value="WH">武汉</option>
+            </select>
+        </label>
+        <br>
+        <label for="memo">
+            其他信息：<textarea name="memo" id="memo" cols="30" rows="10" v-model.lazy="userInfo.other"></textarea>
+        </label>
+        <br>
+        <label for="protocol">
+            <input type="checkbox" id="protocol" v-model="userInfo.agree">阅读并接受 <a href="#">《用户协议》</a>
+        </label>
+        <br>
+        <button>提交</button>
+    </form>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            userInfo: {
+                account: '',
+                password: '',
+                age: 0,
+                sex: 'male',
+                hobby: [],
+                schoolZone: 'BJ',
+                other: '',
+                agree: false
+            }
+        },
+        methods: {
+            demo() {
+                // console.log(this.userInfo)
+                alert(JSON.stringify(this.userInfo))
+            }
+        }
+    })
+</script>
+</body>
+</html>
