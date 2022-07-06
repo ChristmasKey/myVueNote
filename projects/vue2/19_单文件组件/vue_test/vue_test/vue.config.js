@@ -26,7 +26,8 @@ module.exports = defineConfig({
             // entry: 'src_19_具名插槽/main.js'
             // entry: 'src_20_作用域插槽/main.js'
             // entry: 'src_21_求和案例/main.js'
-            entry: 'src_22_vuex/main.js'
+            // entry: 'src_22_vuex/main.js'
+            entry: 'src_23_vuex(namespace)/main.js'
         }
     },
     lintOnSave: false, //关闭语法检查

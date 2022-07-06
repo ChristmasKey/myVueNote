@@ -3,6 +3,7 @@
         <h1>当前求和为：{{sum}}</h1>
         <h3>当前求和放大10倍为：{{bigSum}}</h3>
         <h3>我在{{school}}，学习{{subject}}</h3>
+        <h3 style="color: red;">Person组件的总人数是：{{personList.length}}</h3>
         <select v-model.number="n">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -45,7 +46,7 @@
             //对象写法
             // ...mapState({he: 'sum', xuexiao: 'school', xueke: 'subject'}),
             //数组写法
-            ...mapState(['sum', 'school', 'subject']),
+            ...mapState(['sum', 'school', 'subject', 'personList']),
 
             //借助mapGetters生成计算属性，获取vuex中的状态数据
             //对象写法
@@ -96,6 +97,8 @@
         },
         mounted() {
             // console.log('Count', this.$store)
+            // const x = mapState({he: 'sum', xuexiao: 'school', xueke: 'subject'})
+            // console.log(x)
         }
     }
 </script>

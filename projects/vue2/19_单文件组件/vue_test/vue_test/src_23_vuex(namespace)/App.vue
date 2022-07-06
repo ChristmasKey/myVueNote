@@ -11,10 +11,7 @@
     import Person from "./components/Person";
     export default {
         name: "App",
-        components: {Person, Count},
-        mounted() {
-            // console.log('App', this.$store)
-        }
+        components: {Person, Count}
     }
 </script>
 
