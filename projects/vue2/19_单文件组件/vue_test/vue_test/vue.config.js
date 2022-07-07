@@ -27,7 +27,12 @@ module.exports = defineConfig({
             // entry: 'src_20_作用域插槽/main.js'
             // entry: 'src_21_求和案例/main.js'
             // entry: 'src_22_vuex/main.js'
-            entry: 'src_23_vuex(namespace)/main.js'
+            // entry: 'src_23_vuex(namespace)/main.js'
+            // entry: 'src_24_基本路由/main.js'
+            // entry: 'src_25_嵌套路由/main.js'
+            // entry: 'src_26_路由的query参数/main.js'
+            // entry: 'src_27_路由的params参数/main.js'
+            entry: 'src_28_路由的props配置/main.js'
         }
     },
     lintOnSave: false, //关闭语法检查
