@@ -9,7 +9,7 @@
                 <router-link :to="{
                     //此处只能使用name，不能使用path指定路由
                     name: 'xiangqing', //通过命名指定路由
-                    params: {
+                    query: {
                         id: msg.id,
                         title: msg.title
                     }

@@ -3671,3 +3671,46 @@ $route.params.id
 $route.params.title
 ```
 
+
+
+### 路由的props配置
+
+```js
+{
+    name: 'xiangqing',
+    path: 'detail/:id',
+    component: Detail,
+    
+    //第一种写法：props值为对象，该对象中所有key-value的组合最终都会通过props传给Detail组件
+    //props: {a: 900}
+    
+    //第二种写法：props值为布尔值，布尔值为true，则把路由收到的所有params参数通过props传给Detail组件
+    //props: true
+        
+    //第三种写法：props值为函数，该函数返回的对象中每一组key-value都会通过props传给Detail组件
+    props($route) {
+        return {
+            id: $route.query.id,
+            title: $route.query.title
+        }
+    }
+}
+```
+
+
+
+### router-link的replace属性
+
+1.作用：控制路由跳转时操作浏览器历史记录的模式
+
+2.浏览器的历史纪录有两种写入方式：分别为`push`和`replace`，`push`是追加历史记录；`replace`是替换当前记录。
+
+路由跳转时候默认为`push`
+
+3.如何开启`replace`模式：`<router-link replace ......>News</router-link>`
+
+
+
+### 编程式路由导航
+
+sss
