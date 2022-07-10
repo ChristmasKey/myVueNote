@@ -33,7 +33,9 @@ module.exports = defineConfig({
             // entry: 'src_26_路由的query参数/main.js'
             // entry: 'src_27_路由的params参数/main.js'
             // entry: 'src_28_路由的props配置/main.js'
-            entry: 'src_29_router-link的replace属性/main.js'
+            // entry: 'src_29_router-link的replace属性/main.js'
+            // entry: 'src_30_编程式路由导航/main.js'
+            entry: 'src_31_路由守卫/main.js'
         }
     },
     lintOnSave: false, //关闭语法检查

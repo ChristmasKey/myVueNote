@@ -20,12 +20,16 @@ export default new VueRouter({
                     component: Message,
                     children: [
                         {
+                            name: 'xiangqing',
                             path: 'detail',
+                            // path: 'detail/:id/:title',
                             component: Detail,
                             props: function ($route) {
                                 return {
                                     id: $route.query.id,
+                                    // id: $route.params.id,
                                     title: $route.query.title
+                                    // title: $route.params.title
                                 }
                             }
                         }

@@ -15,17 +15,6 @@
                 opacity: 1
             }
         },
-        /*beforeDestroy() {
-            console.log('News组件即将被销毁')
-            clearInterval(this.timer)
-        },
-        mounted() {
-            this.timer = setInterval(() => {
-                this.opacity -= 0.01
-                if (this.opacity <= 0) this.opacity = 1
-            }, 5)
-        }*/
-        //$router独有的，两个新的生命周期钩子
         activated() {
             console.log('News组件被激活了')
             this.timer = setInterval(() => {

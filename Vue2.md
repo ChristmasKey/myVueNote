@@ -3653,7 +3653,7 @@ $route.query.title
 <!--跳转路由并携带params参数，to的对象写法-->
 <router-link :to="{
                       name: 'xiangqing',
-                      query: {
+                      params: {
                           id: msg.id,
                           title: msg.title
                       }
@@ -3713,4 +3713,131 @@ $route.params.title
 
 ### 编程式路由导航
 
-sss
+1.作用：不借助`<router-link>`实现路由跳转，让路由跳转更加灵活
+
+2.具体编码：
+
+```js
+//$router的两个API
+this.$router.push({
+    name: 'xiangqing',
+    params: {
+        id: xxx,
+        title: xxx
+    }
+})
+
+this.$router.replace({
+    name: 'xiangqing',
+    params: {
+        id: xxx,
+        title: xxx
+    }
+})
+
+//$router的其他API
+this.$router.back() //后退
+this.$router.forward() //前进
+this.$router.go() //前进或后退几步，传参为步数
+```
+
+> 关于VueRouter编程路由，重复点击报错问题：
+>
+> https://blog.csdn.net/nilmao/article/details/122272406
+
+
+
+### 缓存路由组件
+
+1.作用：让不展示的路由组件保持挂载，不被销毁
+
+2.使用
+
+```vue
+<keep-alive include="News">
+	<router-view></router-view>
+</keep-alive>
+```
+
+
+
+### 两个新的生命周期钩子
+
+1.作用：路由组件独有的两个钩子，用于捕获路由组件的激活状态
+
+2.具体名字：
+
+- `activated` 路由组件被激活时触发
+- `deactivated` 路由组件失活时触发
+
+
+
+### 路由守卫
+
+1.作用：对路由进行权限控制
+
+2.分类：全局守卫、独享守卫、组件内守卫
+
+3.全局守卫
+
+```js
+//全局前置守卫，初始化时执行、每次路由切换前执行
+router.beforeEach((to, from, next) => {
+    console.log('beforeEach', to, from)
+    if(to.meta.isAuth) { //判断当前路由是否需要进行权限控制
+        if(localStorage.getItem('school') === 'spring') {
+            next() //放行
+        } else {
+            alert('暂无权限查看')
+            //next({name: 'guanyu'})
+        }
+    } else {
+        next() //放行
+    }
+})
+
+//全局后置守卫，初始化时执行、每次路由切换后执行
+router.afterEach((to, from) => {
+    console.log('afterEach', to, from)
+    if(to.meta.title) {
+        document.title = to.meta.title //修改网页的title
+    } else {
+        document.title = 'vue_test'
+    }
+})
+```
+
+4.独享路由守卫（==只有前置守卫==）
+
+```js
+beforeEnter(to, from, next) {
+    console.log('beforeEnter', to, from)
+    
+    if(localStorage.getItem('school') === 'spring') {
+        next()
+    } else {
+        alert('暂无权限查看！')
+        //next({name: 'guanyu'})
+    }
+}
+```
+
+5.组件内守卫
+
+```js
+//进入守卫，通过路由规则，进入该组件时被调用
+beforeRouteEnter(to, from, next) {},
+
+//离开守卫，通过路由规则，离开该组件时被调用
+beforeRouteLeave(to, from, next) {}
+```
+
+
+
+## History模式
+
+
+
+
+
+## Hash模式

@@ -2,7 +2,7 @@
     <div>
         <ul>
             <li v-for="msg in messageList" :key="msg.id">
-                <router-link :to="{
+                <router-link replace :to="{
                     path: '/home/message/detail',
                     query: {
                         id: msg.id,

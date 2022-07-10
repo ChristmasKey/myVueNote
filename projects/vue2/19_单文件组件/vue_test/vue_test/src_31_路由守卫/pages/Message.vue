@@ -3,8 +3,8 @@
         <ul>
             <li v-for="msg in messageList" :key="msg.id">
                 <router-link :to="{
-                    path: '/home/message/detail',
-                    query: {
+                    name: 'xiangqing',
+                    params: {
                         id: msg.id,
                         title: msg.title
                     }
@@ -33,30 +33,24 @@
         },
         methods: {
             pushShow(msg) {
-                // console.log(this.$router)
                 this.$router.push({
                     name: 'xiangqing',
-                    query: {
-                    // params: {
+                    params: {
                         id: msg.id,
                         title: msg.title
                     }
-                })
+                }, () => {}, () => {})
             },
             replaceShow(msg) {
                 this.$router.replace({
                     name: 'xiangqing',
-                    query: {
-                    // params: {
+                    params: {
                         id: msg.id,
                         title: msg.title
                     }
                 })
             }
         },
-        beforeDestroy() {
-            // console.log('Message组件即将被销毁')
-        }
     }
 </script>
 
