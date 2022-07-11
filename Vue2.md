@@ -3834,10 +3834,71 @@ beforeRouteLeave(to, from, next) {}
 
 
 
-## History模式
+## 路由器的两种工作模式
+
+1.对于一个url来说，什么是hash值？——#及后面的内容就是hash值
+
+2.hash值不会包含在HTTP请求中，即：hash值不会带给服务器
+
+3.hash模式：
+
+- 地址中永远带着#号，不美观
+- 若以后将地址通过第三方手机App分享，若App校验严格，则地址会被标记为不合法
+- 兼容性较好
+
+4.history模式：
+
+- 地址干净、美观
+- 兼容性和hash模式相比略差
+- 应用部署上线时，需要后端人员支持，解决刷新页面服务端404的问题
 
 
 
+利用node编写服务器，部署前端项目
+
+①将前端代码打包：`npm run build`
+
+②编写node服务器
+
+```js
+const express = require('express')
+const history = require('connect-history-api-fallback')
+
+const app = express()
+
+app.use(history())
+//配置静态资源目录路径
+app.use(express.static(__dirname + '/static'))
+
+app.get('/person', (req, res) => {
+    res.send({
+        name: 'tom',
+        age: 18
+    })
+})
+
+app.listen(5005, (err) => {
+    if(!err)
+        console.log('服务器启动成功了！')
+})
+```
+
+③将打包后的前端项目放到服务器的静态资源目录`static`
+
+==利用**connect-history-api-fallback包**解决history模式下，前后端路由无法区分问题==
+
+`npm install connect-history-api-fallback`
 
 
-## Hash模式
+
+## Element UI
+
+[官方文档](https://element.eleme.io/#/zh-CN/component/quickstart)
+
+
+
+# Vue3
+
+[B站视频](https://www.bilibili.com/video/BV1Zy4y1K7SH?p=136&spm_id_from=pageDriver&vd_source=71b23ebd2cd9db8c137e17cdd381c618)
+
+简介
