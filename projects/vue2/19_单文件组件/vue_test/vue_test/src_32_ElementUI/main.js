@@ -7,7 +7,7 @@ import App from "./App";
 // import 'element-ui/lib/theme-chalk/index.css';
 
 //按需引入ElementUI
-import {Button, Row, DatePicker} from "element-ui";
+import {Button, Row, DatePicker, Form, FormItem, Input, Select, Option, Col, TimePicker} from "element-ui";
 
 Vue.config.productionTip = false;
 
@@ -16,6 +16,13 @@ Vue.config.productionTip = false;
 Vue.component(Button.name, Button);
 Vue.component(Row.name, Row);
 Vue.component(DatePicker.name, DatePicker);
+Vue.component(Form.name, Form);
+Vue.component(FormItem.name, FormItem);
+Vue.use(Input);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(Col);
+Vue.use(TimePicker);
 
 new Vue({
     el: '#app',
