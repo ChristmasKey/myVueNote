@@ -98,3 +98,44 @@ npm run dev
 
 分析以vue-cli创建的项目工程结构
 
+分析入口文件main.js（==不再支持vue2的写法==）
+
+```js
+//引入的不再是Vue构造函数了，而是一个名为createApp的工厂函数
+import { createApp } from 'vue'
+import App from './App.vue'
+
+// createApp(App).mount('#app')
+//（对上一行的代码进行分解）
+
+//创建应用实例对象——app（类似于之前Vue2中的vm，但是app比vm更轻）
+const app = createApp(App)
+// console.log('@@@', app)
+
+//挂载
+app.mount("#app")
+
+//卸载
+// setTimeout(() => {
+//     app.unmount()
+// }, 1000)
+
+/*
+Vue2中的写法：
+const vm = new Vue({
+    render: h => h(App)
+})
+vm.$mount("#app")
+*/
+```
+
+分析根组件App.vue
+
+```vue
+<template>
+  <!--Vue3组件中的模板结构，可以没有根标签-->
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
+</template>
+```
+
