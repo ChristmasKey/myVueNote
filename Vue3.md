@@ -67,7 +67,7 @@ npm run serve
 
 viet官网：https://vitejs.cn
 
-- 什么是vite？——新一代的前端构建工具
+- 什么是vite？——新一代的前端构建工具（现在大多使用webpack）
 - 优势：
   - 开发环境中，无需打包操作，可快速的冷启动
   - 轻量快速的热重载（HMR）Hot Module Replacement
@@ -84,5 +84,17 @@ viet官网：https://vitejs.cn
 ```shell
 ##创建工程
 npm init vite-app <project-name>
+#进入工程目录
+cd <project-name>
+#安装依赖
+npm install
+#运行
+npm run dev
 ```
+
+
+
+## 4.分析工程结构
+
+分析以vue-cli创建的项目工程结构
 
