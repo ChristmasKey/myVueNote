@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue3的响应式原理</title>
+</head>
+<body>
+<script type="text/javascript">
+    //源数据
+    let person = {
+        name: "张三",
+        age: 18
+    }
+
+    //模拟Vue2中实现响应式
+    /*let p = {}
+    Object.defineProperty(p, 'name', {
+        configurable: true, //配置为true后，此属性就可以被删除了
+        get() { //有人读取name时调用
+            return person.name
+        },
+        set(v) { //有人修改name时调用
+            console.log('有人修改了name属性，vue发现后，要去更新界面')
+            person.name = v
+        }
+    })
+    Object.defineProperty(p, 'age', {
+        get() { //有人读取age时调用
+            return person.age
+        },
+        set(v) { //有人修改age时调用
+            console.log('有人修改了age属性，vue发现后，要去更新界面')
+            person.age = v
+        }
+    })*/
+
+    //模拟Vue3中实现响应式
+</script>
+</body>
+</html>

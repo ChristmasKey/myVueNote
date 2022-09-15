@@ -9,6 +9,8 @@
     <button @click="test1">测试一下在Vue2的配置中去读取Vue3中的数据、方法</button>
     <br><br>
     <button @click="test2">测试一下在Vue3的setup的配置中去读取Vue2中的数据</button>
+
+    <h2>a的值是：{{a}}</h2>
 </template>
 
 <script>
@@ -19,6 +21,7 @@
         data() {
             return {
                 sex: '男',
+                a: 100
             }
         },
         methods: {
@@ -38,6 +41,7 @@
             //数据
             let name = "张三"
             let age = 18
+            let a = 200
 
             //方法
             function sayHello() {
@@ -58,7 +62,8 @@
                 name,
                 age,
                 sayHello,
-                test2
+                test2,
+                a,
             }
 
             //返回一个函数（渲染函数）
