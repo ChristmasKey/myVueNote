@@ -35,6 +35,21 @@
     })*/
 
     //模拟Vue3中实现响应式
+    //认识Proxy
+    const p = new Proxy(person, {
+        get(target, propName, receiver) {
+            console.log(`有人读取了p身上的${propName}属性`)
+            return target[propName]
+        },
+        set(target, propName, value, receiver) {
+            console.log(`有人修改了p身上的${propName}属性，我要去更新界面了！`)
+            target[propName] = value
+        },
+        deleteProperty(target, propName) {
+            console.log(`有人删除了p身上的${propName}属性，我要去更新界面了！`)
+            delete target[propName]
+        }
+    },)
 </script>
 </body>
 </html>
