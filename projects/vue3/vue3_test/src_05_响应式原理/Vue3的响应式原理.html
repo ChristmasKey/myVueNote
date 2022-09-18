@@ -34,22 +34,81 @@
         }
     })*/
 
-    //模拟Vue3中实现响应式
     //认识Proxy
-    const p = new Proxy(person, {
+    /*const p = new Proxy(person, {
+        //有人读取p的某个属性时调用
         get(target, propName, receiver) {
             console.log(`有人读取了p身上的${propName}属性`)
             return target[propName]
         },
+        //有人修改p的某个属性、或给p追加某个属性时调用
         set(target, propName, value, receiver) {
             console.log(`有人修改了p身上的${propName}属性，我要去更新界面了！`)
             target[propName] = value
         },
+        //有人删除p的某个属性时调用
         deleteProperty(target, propName) {
             console.log(`有人删除了p身上的${propName}属性，我要去更新界面了！`)
-            delete target[propName]
+            return delete target[propName]
+        }
+    },)*/
+    //认识Reflect
+    let obj = {a: 1, b: 2}
+    //通过Object.defineProperty去操作
+    //为了保证健壮性，使用try-catch语句包裹
+    /*try {
+        Object.defineProperty(obj, 'c', {
+            get() {
+                return 3
+            }
+        })
+        //重复定义同名属性，运行时会报错
+        Object.defineProperty(obj, 'c', {
+            get() {
+                return 4
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }*/
+    //通过Reflect.defineProperty去操作（根据返回值判断操作成功与失败）
+    /*const x1 = Reflect.defineProperty(obj, 'c', {
+        get() {
+            return 3
+        }
+    })
+    console.log(x1)
+
+    const x2 = Reflect.defineProperty(obj, 'c', {
+        get() {
+            return 4
+        }
+    })
+    if (x2) {
+        console.log('某某某操作成功了！')
+    } else {
+        console.log('某某某操作失败了！')
+    }*/
+
+    //模拟Vue3中实现响应式
+    const p = new Proxy(person, {
+        //有人读取p的某个属性时调用
+        get(target, propName, receiver) {
+            console.log(`有人读取了p身上的${propName}属性`)
+            return Reflect.get(target, propName)
+        },
+        //有人修改p的某个属性、或给p追加某个属性时调用
+        set(target, propName, value, receiver) {
+            console.log(`有人修改了p身上的${propName}属性，我要去更新界面了！`)
+            return Reflect.set(target, propName, value)
+        },
+        //有人删除p的某个属性时调用
+        deleteProperty(target, propName) {
+            console.log(`有人删除了p身上的${propName}属性，我要去更新界面了！`)
+            return Reflect.deleteProperty(target, propName)
         }
     },)
+
 </script>
 </body>
 </html>
