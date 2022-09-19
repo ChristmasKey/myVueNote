@@ -10,7 +10,11 @@ module.exports = defineConfig({
       // entry: "src_04_reactive函数/main.js"
       // entry: "src_05_响应式原理/main.js"
       // entry: "src_06_setup注意点/main.js"
-      entry: "src_07_computed计算属性/main.js"
+      // entry: "src_07_computed计算属性/main.js"
+      // entry: "src_08_watch监视/main.js"
+      // entry: "src_09_watch监视ref数据的说明/main.js"
+      // entry: "src_10_watchEffect函数/main.js"
+      entry: "src_11_生命周期/main.js"
     }
   },
   lintOnSave: false, //关闭语法检查

@@ -347,13 +347,88 @@ watch(person, (newVal, oldVal) => {
 }, {immediate: true, deep: false}) //此处的deep配置不再奏效
 
 //情况四、监视reactive定义的响应式数据中的某个属性
-watch(（） => person.job, (newVal, oldVal) => {
+watch(() => person.job, (newVal, oldVal) => {
     console.log("person的job变化了", newVal, oldVal)
 }, {immediate: true, deep: true})
 
 //情况五、监视reactive定义的响应式数据中的某些属性
+watch([()=>person.name, ()=>person.age], (newVal, oldVal) => {
+    console.log("person的name或age变化了", newVal, oldVal)
+}, {immediate: true, deep: true})
+
+//特殊情况、监视reactive定义的响应式数据中的对象属性
+//此时deep配置是生效的，但是oldVal仍然无法正确获取
+watch(()=>person.job, (newVal, oldVal) => {
+    console.log('person的job变化了', newVal, oldVal)
+}, {immediate: true, deep: true})
+```
+
+
+
+==watch监视ref数据的说明==
+
+```js
+setup() {
+    let person = ref({
+        name: '张三',
+        age: 18,
+        job: {
+            salary: 20
+        }
+    })
+
+
+    /*
+        如果使用ref去定义person对象，那么直接监视person其实是监视一个RefImpl对象
+        真正的person对象是它的value
+        所以我们要正确的监视person有两种方法：
+            1、监视person.value
+            2、开启深度监视
+    */
+    watch(person, (newVal, oldVal) => {
+        console.log('person改变了', newVal, oldVal)
+    }, {deep: true})
+    
+    return {
+        person
+    }
+}
 ```
 
 
 
 #### 3.watchEffect函数
+
+- watch的套路是：既要指明监视的属性，也要指明监视的回调
+- watchEffect的套路是：不用指明监视哪个属性，监视的回调中用哪个属性，那就监视哪个属性
+- watchEffect有点像computed：
+  - 但computed注重的是计算出来的值（回调函数的返回值），所以必须要写返回值
+  - 而watchEffect更注重过程（回调函数的函数体），所以不是必须写返回值
+
+```js
+//watchEffect所指定的回调中用到的数据只要发生变化，则直接重新执行回调
+watchEffect(() => {
+    const x1 = sum.value
+    const x2 = person.age
+    console.log('watchEffect配置的回调执行了')
+})
+```
+
+
+
+### 生命周期
+
+<img src="./images/Vue3_lifecycle.png" alt="Vue3_lifecycle" style="zoom:50%;" />
+
+Vue3.0中可以继续使用Vue2.x中的生命周期钩子，但有两个被更名了：
+
+- `beforeDestroy`改名为`beforeUnmount`
+- `destroy`改名为`unmounted`
+
+Vue3.0也提供了Composition API形式的生命周期钩子，与Vue2.x中钩子对应关系如下：
+
+- `beforeCreate`===>`setup()`
+- `created`===>`setup()`
+- `beforeMount`===>`onBeforeMount`
+- `mounted`===>`onMounted`
+- `beforeUpdate`===>`onBeforeUpdate`
