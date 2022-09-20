@@ -15,7 +15,10 @@ module.exports = defineConfig({
       // entry: "src_09_watch监视ref数据的说明/main.js"
       // entry: "src_10_watchEffect函数/main.js"
       // entry: "src_11_生命周期/main.js"
-      entry: "src_12_自定义hook函数/main.js"
+      // entry: "src_12_自定义hook函数/main.js"
+      // entry: "src_13_toRef与toRefs/main.js"
+      // entry: "src_14_shallowReactive与shallowRef/main.js"
+      entry: "src_15_readOnly与shallowReadonly/main.js"
     }
   },
   lintOnSave: false, //关闭语法检查

@@ -3,25 +3,37 @@
 </template>
 
 <script>
-    import {reactive, onMounted} from 'vue'
+    import {reactive, onMounted, onBeforeUnmount} from 'vue'
+    import usePoint from "../hooks/usePoint";
 
     export default {
         name: "Demo",
         setup() {
             //数据
-            let point = reactive({
+            let point = usePoint()
+
+            /*let point = reactive({
                 x: 0,
                 y: 0
             })
 
+            //方法
+            function savePoint(event) {
+                point.x = event.pageX
+                point.y = event.pageY
+                console.log(event.pageX, event.pageY)
+            }
+
             //生命周期
             onMounted(() => {
-                window.addEventListener('click', even => {
-                    point.x = even.pageX
-                    point.y = even.pageY
-                    console.log(even.pageX, even.pageY)
-                })
+                //绑定“页面点击”事件监听
+                window.addEventListener('click', savePoint)
             })
+
+            onBeforeUnmount(() => {
+                //移除事件监听
+                window.removeEventListener('click', savePoint)
+            })*/
 
             //返回一个对象
             return {
