@@ -501,7 +501,145 @@ Vue3.0也提供了Composition API形式的生命周期钩子，与Vue2.x中钩�
 - 实现防抖效果：
 
   ```vue
+  <template>
+      <input type="text" v-model="keyword"/>
+      <h3>
+          {{keyword}}
+      </h3>
+  </template>
   
+  <script>
+      import {ref, customRef} from 'vue'
+      export default {
+          name: 'Demo',
+          setup() {
+              //let keyword = ref('hello') //使用Vue准备好的内置ref
+              
+              //自定义一个myRef
+              function myRef(value, delay) {
+                  let timer
+                  //通过customRef去实现自定义
+                  return customRef((track, trigger) => {
+                      return {
+                          get() {
+                              console.log(`有人从myRef这个容器中读取数据了，我把${value}给他了`)
+                              track() //通知Vue追踪数据的变化（提前和get商量一下，让他认为这个value是有用的）
+                              return value
+                          },
+                          set(newVal) {
+                              console.log(`有人把myRef这个容器中数据改为了：${newVal}`)
+                              clearTimeout(timer)
+                              timer = setTimeout(() => {
+                                  value = newVal
+                                  trigger() //通知Vue去重新解析模板
+                              }, 1000)
+                          }
+                      }
+                  })
+              }
+              
+              let keyword = myRef('hello', 500)
+              
+              return {
+                  keyword
+              }
+          }
+      }
+  </script>
+  ```
+  
+
+
+
+### 5、provide与inject
+
+- 作用：实现<strong style="color:red;">祖与后代组件间</strong>通信
+
+- 套路：父组件有一个`provide`选项来提供数据，后代组件有一个`inject`选项来开始使用这些数据
+
+- 具体写法：
+
+  1.祖组件中
+
+  ```js
+  setup() {
+      ......
+      let car = reactive({name: '奔驰', price: '40万'})
+      provide('car', car)
+      ......
+  }
+  ```
+
+  2.后代组件中
+
+  ```js
+  setup() {
+      ......
+      const car = inject('car')
+      return {car}
+      ......
+  }
   ```
 
   
+
+### 6、响应式数据的判断
+
+- isRef：检查一个值是否为ref对象
+- isReactive：检查一个对象是否由`reactive`创建的响应式代理
+- isReadonly：检查一个对象是否由`readonly`创建的只读代理
+- isProxy：检查一个对象是否由`reactive`或者`readonly`方法创建的代理
+
+
+
+## 6.新的组件
+
+### 1.Fragment
+
+- 在Vue2中，组件必须有一个根标签
+- 在Vue3中，组件可以没有根标签，内部会将多个标签包含在一个Fragment虚拟元素中
+- 好处：减少标签层级，减小内存占用
+
+
+
+### 2.Teleport
+
+- 什么是Teleport？——`Teleport`是一种能够将我们的<strong style="color:red;">组件html结构</strong>移动到指定位置的技术
+
+```vue
+<teleport>
+    <div v-if="isShow" class="mask">
+        <div class="dialog">
+            <h3>
+                我是一个弹窗
+            </h3>
+            <button @click="isShow = false">
+                关闭弹窗
+            </button>
+        </div>
+    </div>
+</teleport>
+```
+
+
+
+### 3.Suspense
+
+- 等待异步组件时渲染一些额外的内容，让应用有更好的用户体验
+
+- 使用步骤：
+
+  - 异步引入组件
+
+    ```js
+    import {defineAsyncComponent} from 'vue'
+    const Child = defineAsyncComponent(()=>import('./components/Child.vue'))
+    ```
+
+  - 使用`Suspense`包裹组件，并配置好`default`与`fallback`
+
+    ```vue
+    
+    ```
+
+    

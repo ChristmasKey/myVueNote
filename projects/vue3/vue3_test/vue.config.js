@@ -19,7 +19,11 @@ module.exports = defineConfig({
       // entry: "src_13_toRef与toRefs/main.js"
       // entry: "src_14_shallowReactive与shallowRef/main.js"
       // entry: "src_15_readOnly与shallowReadonly/main.js"
-      entry: "src_16_toRaw与markRaw/main.js"
+      // entry: "src_16_toRaw与markRaw/main.js"
+      // entry: "src_17_customRef/main.js"
+      // entry: "src_18_provide与inject/main.js"
+      // entry: "src_19_响应式数据的判断/main.js"
+      entry: "src_20_teleport组件/main.js"
     }
   },
   lintOnSave: false, //关闭语法检查
